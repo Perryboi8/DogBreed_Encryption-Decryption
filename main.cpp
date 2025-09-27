@@ -6,6 +6,22 @@
 #include <sstream>
 using namespace std;
 
+//Ryan Perry
+//CPSC 240
+//Project 1
+//09/20/25
+
+
+//Functions
+
+vector<string> dog_Breeds(const string &filename);
+void encryptfile(string inputFileName, string outputFileName, int key, const vector<string>& breeds);
+void decryptFile(string inputFileName, string outputFileName, int key, const vector<string>& breeds);
+
+//
+
+
+
 //Load breeds from CSV (name column only)
 vector<string> dog_Breeds(const string &filename) {
     vector<string> breeds;
@@ -29,43 +45,45 @@ vector<string> dog_Breeds(const string &filename) {
     return breeds;
 }
 
-//Encrypt: map each character -> rotated breed
+//Encrypt file map each character -> rotated breed
 void encryptfile(string inputFileName, string outputFileName, int key, const vector<string>& breeds) {
     ifstream input_File(inputFileName, ios::binary); // binary keeps all chars
     ofstream output_File(outputFileName);
 
-    if (!input_File || !output_File) {
-        cerr << "Error: could not open input/output file!" << endl;
+    //Check for input file
+    if (!input_File) {
+        cerr << "Error: could not open input file!" << endl;
         return;
     }
 
     int n = breeds.size();
     if (n == 0) {
-        cerr << "Error: no breeds loaded!" << endl;
+        cerr << "Error: no breeds loaded!, please check you have the right dogbreeds.csv file" << endl;
         return;
     }
 
     char c;
     while (input_File.get(c)) {
-        int idx = (unsigned char)c % n;       // map char → index
+        int idx = (unsigned char)c % n;       // maps char -> index
         int encIdx = (idx + key) % n;         // shift by key
         output_File << breeds[encIdx] << "\n"; // write one breed per line
     }
 }
 
-//Decrypt: map each breed -> original character
+//Decryptfile, map each breed -> original character
 void decryptFile(string inputFileName, string outputFileName, int key, const vector<string>& breeds) {
     ifstream input_File(inputFileName);
     ofstream output_File(outputFileName, ios::binary);
 
-    if (!input_File || !output_File) {
-        cerr << "Error: could not open input/output file!" << endl;
+    //check if input file can be read
+    if (!input_File) {
+        cerr << "Error: could not open input file!" << endl;
         return;
     }
 
     int n = breeds.size();
     if (n == 0) {
-        cerr << "Error: no breeds loaded!" << endl;
+        cerr << "Error: no breeds loaded!, please check you havbe the right dogbreeds.csv file" << endl;
         return;
     }
 
