@@ -145,7 +145,19 @@ int main() {
     cin >> outputFile;
 
     cout << "Enter the encryption/decryption key (integer): ";
-    cin >> key;
+        while (true) {
+            cin >> key;
+
+            if (cin.fail()) {
+                cin.clear();
+
+                cin.ignore(100000, '\n');
+                cout << "Invalid input, please enter a integer for the key\n";
+            }
+            else {
+                break;
+            }
+        }
 
     if (choice == 1) {
         encryptfile(inputFile, outputFile, key, dogBreed);
